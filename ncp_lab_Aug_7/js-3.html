@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       
+
+<script type="text/javascript">
+     function openNewWindow() {
+      open("js-7.html");
+    }
+     function writeText(txt) {
+    document.getElementById("desc").innerHTML = txt;
+  };
+
+    
+    
+</script>
+ </head>
+<body>
+
+
+<img src="back11.jpg" alt="rectangle" usemap="#compmap" width="300" height="168" onclick="openNewWindow()" >
+<map name="compmap">
+<area shape ="rect" coords ="0,0,300,168"
+onmouseover="writeText('Picture of books')"
+href ="js-7.html" target ="_blank" alt="book" />
+<p id="desc"></p> 
+   
+</map>
+
+</body>
+</html>
+
+
+
+

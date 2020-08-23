@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+<body>
+<script type="text/javascript">
+// var i=window.prompt("Enter a value");
+var rows=prompt("Enter rows ")
+var cols=prompt("Enter Columns")
+    var x=hist();
+    function hist()
+        {
+            var strin="<table border='1',width=500>";
+            for(var i=1;i<=cols;i++)
+            {
+                strin+="<th>"+i+"</th>";
+            }
+            strin+="</tr>";
+            for(var k=1;k<=rows;k++)
+            {
+               strin+="<tr>";
+               for(var j=1;j<=cols;j++)
+               {
+                   strin+="<td>"+(k*j)+"</td>";
+               }
+               strin+="</tr>";
+            }
+            strin+="</table>";
+            return strin;
+        }
+   document.write(x);
+    
+        
+        
+        
+</script>
+</body>
+</html>

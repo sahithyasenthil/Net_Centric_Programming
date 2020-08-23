@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <p id="demo"></p>
+    </head>
+<body>
+    
+<script type="text/javascript">
+
+    var num=prompt("Enter no of index contents");
+    
+     contents(num);
+    function contents(num)
+    {
+        var list1=[]
+        var list2=[]
+        for(var i=1;i<=num;i++)
+        {
+            var x=prompt('Enter chapter name');
+            var y=prompt('Enter chapter number');
+           list1.push(x);
+           
+           list2.push(y); 
+        }
+        
+        var strin=""
+        for(var j=0;j<list1.length;j++)
+        {
+            var len=list1[j].length;
+            var len1= list2[j].length;
+            console.log(len);
+            console.log(len1);
+            strin+="<li>"+(j+1)+"."+list1[j];
+            for(var k=0;k<(100-(len+len1));k++)
+            {
+                strin+="."
+            }
+            strin+=list2[j] + "</li>";
+            
+        }
+        
+        document.getElementById('demo').innerHTML=strin
+        // strin;
+        }
+</script>
+</body>
+</html>

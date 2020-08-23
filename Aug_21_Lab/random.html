@@ -1,0 +1,84 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+
+<body>
+    <img src="" id="image" style="height: 300px; width: auto;">
+    <h3 id="desc"></h3>
+
+    <button id="gen" onclick="thefunc()">Randomize</button>
+    <table border="1px" style="border-style: dotted;">
+        <tr>
+            <td>Pikachu</td>
+            <td id="1">0</td>
+        </tr>
+        <tr>
+            <td>Bulbusar</td>
+            <td id="2">0</td>
+        </tr>
+        <tr>
+            <td>Charamander</td>
+            <td id="3">0</td>
+        </tr>
+        <tr>
+            <td>Mewtwo</td>
+            <td id="4">0</td>
+        </tr>
+        <tr>
+            <td>Squirtle</td>
+            <td id="5">0</td>
+        </tr>
+        
+        
+        
+        
+    </table>
+
+    <script>
+        var n = {"1": 0,"2": 0,"3": 0,"4": 0,"5": 0,}
+
+        var texts = ["Pikachu","Bulbusar","Charamander","Mewtwo","Squirtle"]
+
+        var images = [
+            "https://i.pinimg.com/originals/76/47/9d/76479dd91dc55c2768ddccfc30a4fbf5.png",
+            "https://i.pinimg.com/originals/d6/61/96/d66196beb60d306a966ea39ed11c2b3d.png",
+            "https://cdn.imgbin.com/18/8/6/imgbin-pok-mon-go-charmander-charizard-bulbasaur-cute-babies-iCsfpV0BZRYSyajmCK4A7XbJM.jpg",
+            "https://cdn.bulbagarden.net/upload/thumb/7/78/150Mewtwo.png/1200px-150Mewtwo.png",
+            "https://img.pokemondb.net/artwork/large/squirtle.jpg"
+            ]
+
+
+        function thefunc()
+        {
+            for(var i=0;i<10;i++)
+            {
+                setTimeout(function () {
+                    var rand = Math.floor(Math.random() * 5)
+                    if (document.getElementById(String(rand + 1)).innerText == "0") {
+                        document.getElementById(String(rand + 1)).innerText = "1"
+                        n[String(rand + 1)] = 1
+                    } else {
+                        document.getElementById(String(rand + 1)).innerText = String(parseInt(document.getElementById(String(rand + 1)).innerText) + 1)
+                        n[String(rand + 1)] = parseInt(document.getElementById(String(rand + 1)).innerText) + 1
+                    }
+                    document.getElementById('desc').innerText = texts[rand]
+                    document.getElementById("image").src = images[rand]
+                }, 2000 * i); 
+                
+                
+            }
+            
+        }
+    </script>
+</body>
+
+</html>

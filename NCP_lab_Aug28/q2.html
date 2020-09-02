@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="q2.css" />
+    </head>
+    <body>
+        <div id="container" class="container">
+            <form id="contact" method="post">
+                <h3>Form</h3>
+                <fieldset>
+                    <input id="fname" placeholder="First Name *" type="text" tabindex="1" required autofocus />
+                    <input id="mname" placeholder="Middle Name" type="text" tabindex="1" />
+                    <input id="lname" placeholder="Last Name *" type="text" tabindex="1" required autofocus />
+                </fieldset>
+                <fieldset>
+                    <input type="text" id="initials" placeholder="Father Name *" class="field text-field initials-field">
+                </fieldset>
+                <fieldset>
+                    <textarea id="address" placeholder="Address" tabindex="2" required></textarea>
+                </fieldset>
+                <fieldset>
+                    <textarea id="address" placeholder="Permanent Address" tabindex="2" required></textarea>
+                </fieldset>
+
+                <fieldset>
+                    <input placeholder="Email" type="text" id="mail1" tabindex="3" required autofocus />
+                    <span class="at">@</span>
+                    <input placeholder="Domain" type="text" id="mail2" tabindex="4" required autofocus />
+                </fieldset>
+                <fieldset class="gender">
+                    <label>Gender:</label>
+                    <span>
+                        <input type="radio" id="female" name="gender" value="Female" checked />
+                        <label for="female">Female</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="male" name="gender" value="Male" />
+                        <label for="male">Male</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="other" name="gender" value="Other" />
+                        <label for="other">Other</label>
+                    </span>
+                </fieldset>
+                <fieldset>
+                    <label class="form-label" for="dateOfBirth">Date of birth: </label>
+                    <input type="date" id="dateOfBirth" class="field date-field dob-field" min="1900-01-01" max="2015-09-18"  required>
+           <span class="message"></span>
+                </fieldset>
+                <fieldset>
+                    <label class="age-range" for="age-range">Age Group: </label>
+                    <select id="age-range">
+                        <option value="default">Choose Range..</option>
+                        <option value="0-18">Less than 18</option>
+                        <option value="18-35">18 - 35</option>
+                        <option value="35+">Above 35</option>
+                    </select>
+                </fieldset>
+                <span id="guardian-optional"> </span>
+                <div class="margin"></div>
+                <fieldset>
+                    <button name="submit" type="submit" id="submit_button" data-submit="...Sending">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+    <script >
+        document.getElementById("submit_button").addEventListener("click", function (e) {
+    e.preventDefault();
+    var fname = document.getElementById("fname").value;
+    var mname = document.getElementById("mname").value;
+    var lname = document.getElementById("lname").value;
+
+    var mail_pattern = /^\w([\.-]?\w+)*$/;
+    var domain_pattern = /^\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var mname_pattern = /^[a-zA-z]*$/;
+    var name_pattern = /^[a-zA-z]+$/;
+
+    var mail1 = document.getElementById("mail1").value;
+    var mail2 = document.getElementById("mail2").value;
+
+    var address = document.getElementById("address").value;
+
+    var proceed = true;
+
+    if (!name_pattern.test(fname)) {
+        alert("First Name should not be empty and should contain only uppercase and lowercase alhapbets");
+        proceed = false;
+    }
+
+    if (!mname_pattern.test(mname)) {
+        alert("Middle Name should contain only uppercase and lowercase alphabets");
+        proceed = false;
+    }
+
+    if (!name_pattern.test(lname)) {
+        alert("Last Name should not be empty and should contain only uppercase and lowercase alphabets");
+        proceed = false;
+    }
+
+    if (address == "") {
+        alert("Address should not be empty");
+        proceed = false;
+    }
+
+    if (!mail_pattern.test(mail1)) {
+        alert("Invalid Mail");
+        proceed = false;
+    }
+
+    if (!domain_pattern.test(mail2)) {
+        alert("Invalid Domain");
+        proceed = false;
+    }
+
+    var age_range = document.getElementById("age-range").value;
+
+    if (age_range === "default") {
+        alert("Choose an age-range");
+        proceed = false;
+    }
+
+    var gname_obj = document.getElementById("gname");
+
+    if (gname_obj != null) {
+        var gname = gname_obj.value;
+        if (!name_pattern.test(gname)) {
+            alert("Guardian Name cannot be empty and should contain only uppercase and lowercase alphabets.");
+            proceed = false;
+        }
+    }
+
+    var insertProperty = function (string, propName, propValue) {
+        var propToReplace = "{{" + propName + "}}";
+        string = string.replace(new RegExp(propToReplace, "g"), propValue);
+        return string;
+    };
+
+    if (proceed) {
+        var container = document.getElementById("contact");
+        var HTML =
+            "<div>Name : {{name_holder}}</div><div>Address: <p> {{address_holder}} </p></div><div>Mail ID: {{mail_holder}}</div><div>Age Range: {{age_holder}}</div><div>Gender: {{gender_holder}}</div>";
+        var xtraHTML = "<div>Guardian Name: {{gname_holder}}</div>";
+        var name = fname + " " + mname + " " + lname;
+        HTML = insertProperty(HTML, "name_holder", name);
+        var mail = mail1 + "@" + mail2;
+        HTML = insertProperty(HTML, "mail_holder", mail);
+
+        var gender = "";
+        var checkboxes = document.getElementsByName("gender");
+        for (box of checkboxes) {
+            if (box.checked) {
+                gender = box.value;
+            }
+        }
+
+        HTML = insertProperty(HTML, "gender_holder", gender);
+        HTML = insertProperty(HTML, "age_holder", age_range);
+        HTML = insertProperty(HTML, "address_holder", address);
+
+        var gname;
+        if (gname_obj != null) {
+            gname = gname_obj.value;
+            HTML += xtraHTML;
+            HTML = insertProperty(HTML, "gname_holder", gname);
+        }
+        container.innerHTML = HTML;
+    }
+});
+
+document.getElementById("age-range").addEventListener("change", function (e) {
+    var age_range = document.getElementById("age-range").value;
+    if (age_range == "0-18") {
+        document.getElementById("guardian-optional").innerHTML = '<input id="gname" placeholder="Guardian Name *" type="text" tabindex="5" required autofocus />';
+    } else {
+        document.getElementById("guardian-optional").innerHTML = null;
+    }
+});
+    </script>
+</html>
